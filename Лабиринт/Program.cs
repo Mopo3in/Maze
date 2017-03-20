@@ -12,6 +12,7 @@ namespace Лабиринт
         /// Главная точка входа для приложения.
         /// </summary>
         [STAThread]
+
         static void Main()
         {
             Application.EnableVisualStyles();
@@ -19,4 +20,8 @@ namespace Лабиринт
             Application.Run(new Form1());
         }
     }
+
+
 }
+
+
