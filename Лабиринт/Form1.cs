@@ -41,7 +41,7 @@ namespace Лабиринт
 
             int lenbmp = (int)(len * numericUpDown2.Value); // Вычисляем размер для будующей картинки
 
-            if (checkBox1.Checked == true)
+            if (radioButton3.Checked != true)
             {
                 gif_en = new AnimatedGifEncoder();
                 String outputFilePath = "Генерация.gif";
@@ -49,10 +49,13 @@ namespace Лабиринт
                 gif_en.SetDelay(40);
                 gif_en.SetRepeat(0);
                 for_gif = new Bitmap(lenbmp, lenbmp);
-                AddToGif(labirint, null);
+                if(radioButton4.Checked == false)
+                    AddToGif(labirint, null);
             }
 
             StartGenerate(ref labirint); // Запускаем генерацию лабиринта
+            if (radioButton4.Checked == true)
+                AddToGif(labirint, null);
             if (checkBox2.Checked == true)
             {
                 int rnd_x = rnd.Next((int)len/2, len);
@@ -63,18 +66,18 @@ namespace Лабиринт
                     rnd_y = rnd.Next((int)len / 2, len);
                 }
                 labirint[rnd_x, rnd_y] = FINISH; // Устанавливаем точку финиша
-                if (checkBox1.Checked == true)
+                if (radioButton3.Checked != true)
                     AddToGif(labirint, new Cell(rnd_x, rnd_y));
             }
             else
             {
                 labirint[len-2, len - 2] = FINISH;
-                if (checkBox1.Checked == true)
+                if (radioButton3.Checked != true)
                     AddToGif(labirint, new Cell(len - 2, len - 2));
             }
 
             GenerateExit(ref labirint); // Ищем решение для лабиринта
-            if (checkBox1.Checked == true)
+            if (radioButton3.Checked == false)
                 gif_en.Finish();
             Bitmap bmp = new Bitmap(lenbmp, lenbmp); // Создаём новую картинку с вычисленными размерами
             Graphics gr = Graphics.FromImage(bmp); 
@@ -123,7 +126,7 @@ namespace Лабиринт
 
         void AddToGif(int[,] labirint,Cell change)
         {
-            if (checkBox1.Checked == false)
+            if (radioButton3.Checked == true)
                 return;
             int len = (int)(numericUpDown1.Value * 2) + 1;
             int lenbmp = (int)(len * numericUpDown2.Value);
@@ -297,14 +300,16 @@ namespace Лабиринт
                 {
                     labirint[Start.x, Start.y] = VISITED;
                     labirint[Start.x, Start.y - 1] = VISITED;
-                    AddToGif(labirint, new Cell(Start.x, Start.y - 1));
+                    if(radioButton5.Checked == true)
+                        AddToGif(labirint, new Cell(Start.x, Start.y - 1));
                     labirint[Start.x, Start.y - 2] = VISITED;
                 }
                 else
                 {
                     labirint[Start.x, Start.y] = VISITED;
                     labirint[Start.x, Start.y + 1] = VISITED;
-                    AddToGif(labirint, new Cell(Start.x, Start.y + 1));
+                    if (radioButton5.Checked == true)
+                        AddToGif(labirint, new Cell(Start.x, Start.y + 1));
                     labirint[Start.x, Start.y + 2] = VISITED;
                 }
             }
@@ -314,14 +319,16 @@ namespace Лабиринт
                 {
                     labirint[Start.x, Start.y] = VISITED;
                     labirint[Start.x - 1, Start.y] = VISITED;
-                    AddToGif(labirint, new Cell(Start.x - 1, Start.y));
+                    if (radioButton5.Checked == true)
+                        AddToGif(labirint, new Cell(Start.x - 1, Start.y));
                     labirint[Start.x - 2, Start.y] = VISITED;
                 }
                 else
                 {
                     labirint[Start.x, Start.y] = VISITED;
                     labirint[Start.x + 1, Start.y] = VISITED;
-                    AddToGif(labirint, new Cell(Start.x + 1, Start.y));
+                    if (radioButton5.Checked == true)
+                        AddToGif(labirint, new Cell(Start.x + 1, Start.y));
                     labirint[Start.x + 2, Start.y] = VISITED;
                 }
             }
